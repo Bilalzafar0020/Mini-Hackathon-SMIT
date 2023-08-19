@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-Hakcathon-SMIT</title>
+<link rel="stylesheet" href="./blog.css">
+
+<link rel="shortcut icon" href="../../Assets/blog-removebg-preview.png" type="image/x-icon">
+
+</head>
+<body>
+    
+    <main class="main">
+
+
+
+    <header>
+
+    <div class="firstnav">
+
+        <h2 class="name1">Personal Blogging App</h2>
+  
+        <h4 class="name2" id="logout">Logout</h4>
+
+    </div>
+
+  <div class="secondnav">
+
+    <h1 class="name3">Dashboard</h1>
+
+  </div>
+
+
+
+    </header>
+
+    <section class="publishBlog">
+
+
+      <div class="inputs">
+      <input type="text" placeholder="Title"  id="title" class="title" required>
+
+<textarea  placeholder="What is in your mind" class="textarea" id="textarea" cols="30" rows="3" name="text" style="resize: none;">
+
+</textarea>
+
+<button class="publish" id="publish">Publish blog</button>
+
+
+      </div>
+      
+    </section>
+
+
+     <h1 class="Myblogs"> My Blogs </h1>
+
+
+
+
+    </main>
+    
+
+
+    <div class="blogs" id="blogs"></div>
+    
+
+
+    <!--  alert box div           -->
+    <div id="alertContainer"></div>
+    
+
+<!-- sweet alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script type="module" src="./blog.js"></script>
+</body>
+</html>
