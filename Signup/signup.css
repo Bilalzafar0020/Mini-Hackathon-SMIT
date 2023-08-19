@@ -187,24 +187,26 @@ h3.or{
     margin-top: 8px;
     color: #ffffff;
 }
-
-button#google{
+button#google {
     border: none;
     outline: none; 
-    background-color:#4267b2;
-    color: #ffffff;
+    background-color: #4267b2; /* Use the same color as in your original code */
+    color: #ffffff; /* White text color for contrast */
     width: 15rem;
-height: 40px;
-font-size: 18px;
-font-variant:normal;
-border-radius: 10px;
-padding-left: 5px;
-z-index: 1;
-transition: border-color 0.1s, border-radius 0.1s, background-color 0.1s;
+    height: 40px;
+    font-size: 18px;
+    font-variant: normal;
+    border-radius: 10px;
+    padding-left: 5px;
+    z-index: 1;
+    transition: border-color 0.1s, border-radius 0.1s, background-color 0.1s;
     cursor: pointer;  
     margin-left: 50px;
 }
 
+button#google:hover {
+    background-color: #385693; /* Darker shade on hover for interactive feel */
+}
 
 .alert {
     position: fixed;
