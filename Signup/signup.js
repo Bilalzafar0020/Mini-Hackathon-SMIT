@@ -55,12 +55,12 @@ window.addEventListener('scroll', function () {
 });
 
 
-  const signupForm = document.querySelector('form');
+  const signupForm = document.querySelector('#inputs');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
 
   signupForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault(); 
 
     const email = emailInput.value;
     const password = passwordInput.value;
@@ -82,16 +82,6 @@ window.addEventListener('scroll', function () {
       });
   });
 
-//  email send
-
-//   sendEmailVerification(auth.currentUser)
-//   .then(() => {
-//     // Email verification sent!
-//     // ...
-//   });
-
-
-
 
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -100,30 +90,30 @@ window.addEventListener('scroll', function () {
 
 
 
-const provider = new GoogleAuthProvider();
+// const provider = new GoogleAuthProvider();
 
- let google = document.getElementById('google');
+//  let google = document.getElementById('google');
 
- google.addEventListener('click', ()=>{
-signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-    window.location.href = '../Loader.html';
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
+//  google.addEventListener('click', ()=>{
+// signInWithPopup(auth, provider)
+//   .then((result) => {
+//     // This gives you a Google Access Token. You can use it to access the Google API.
+//     const credential = GoogleAuthProvider.credentialFromResult(result);
+//     const token = credential.accessToken;
+//     // The signed-in user info.
+//     const user = result.user;
+//     // IdP data available using getAdditionalUserInfo(result)
+//     // ...
+//     window.location.href = '../Loader.html';
+//   }).catch((error) => {
+//     // Handle Errors here.
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     // The email of the user's account used.
+//     const email = error.customData.email;
+//     // The AuthCredential type that was used.
+//     const credential = GoogleAuthProvider.credentialFromError(error);
+//     // ...
+//   });
 
-})
+// })
