@@ -40,13 +40,29 @@
 
         <form class="inputs" id="inputs">
 
-        <input type="text" placeholder="First Name"  id="Fname" class="Fname" required>
-        <input type="text" placeholder="Last Name"  id="Lname" class="Lname" required>
+<input type="text" placeholder="First Name"  id="Fname" class="Fname" required minlength="5" >
+<input type="text" placeholder="Last Name"  id="Lname" class="Lname" required minlength="5">
 
-        <input type="text" placeholder="Email"  id="email" class="email" required>
-        <input type="password" placeholder="Password"  id="password" class="password" required>
+        <input type="email" placeholder="Email"  id="email" class="email" 
+        required pattern=".{6,20}(\d{1,8})?@gmail\.com"
+        title="The pattern of email should be like bilal(any 1 number if have )@gmail.com" />
 
-<input type="password" placeholder="Repeat Password"  id="Rpassword" class="Rpassword" required>
+        <!-- 
+          list="defaultEmails"    add list this in the input 
+          <datalist id="defaultEmails">
+          <option value="bilal007@gmail.com"></option>
+          <option value="Bilal0020@gmail.com"></option>
+          <option value="bilalaa007234@gmail.com"></option>
+          <option value="bilal@gmail.com"></option>
+        </datalist> -->
+
+
+<input type="password" placeholder="Password"  id="password"
+ class="password" 
+ required minlength="8" >      <!--pattern=".{8,25}(\d{8,12})?" -->
+
+<input type="password" placeholder="Repeat Password"
+  id="Rpassword" class="Rpassword" required minlength="8">
 
 <button class="signup">Signup</button>
 

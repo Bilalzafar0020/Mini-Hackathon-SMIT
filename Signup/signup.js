@@ -53,7 +53,96 @@ window.addEventListener('scroll', function () {
     }
   }
 });
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+////////////////////  validations
 
+
+// name 
+
+let FnameValidation = document.getElementById('Fname');
+
+FnameValidation.addEventListener("input", function() {
+  let maxLength = 20;
+  
+  if (FnameValidation.value.length > maxLength) {
+    FnameValidation.value = FnameValidation.value.substring(0, maxLength);
+    showAlert("Maximum 20 characters can be written");
+  }
+});
+
+
+// last name 
+
+let LnameValidation = document.getElementById('Lname');
+
+LnameValidation.addEventListener("input", function() {
+  let maxLength = 20;
+  
+  if (LnameValidation.value.length > maxLength) {
+    LnameValidation.value = LnameValidation.value.substring(0, maxLength);
+    showAlert("Maximum 20 characters can be written");
+  }
+});
+
+
+
+
+
+
+// // password validation function
+
+
+let passwordValidion = document.getElementById('password');
+
+    passwordValidion.addEventListener('input', ()=>{    
+  const passwordInput = document.getElementById('password');
+  const password = passwordInput.value;
+
+  // Regular expressions to check for uppercase and lowercase letters
+  const uppercaseRegex = /[A-Z]/;
+  const lowercaseRegex = /[a-z]/;
+
+  // Checking if the password contains at least one uppercase and one lowercase letter
+  if (uppercaseRegex.test(password) && lowercaseRegex.test(password)) {
+    passwordInput.setCustomValidity(''); // Resetting custom validation message
+  } else {
+    passwordInput.setCustomValidity('Password must include both uppercase and lowercase letters.');
+  }
+
+})
+
+
+
+
+// // confirm  password validation function
+
+let confirmPasswordInput = document.getElementById('Rpassword');
+
+
+confirmPasswordInput.addEventListener('input',()=>{
+
+// getting values
+let passwordValidionValue = passwordValidion.value;
+let confirmPasswordInputValue = confirmPasswordInput.value;
+
+
+if(confirmPasswordInputValue === passwordValidionValue){
+  confirmPasswordInput.setCustomValidity(''); // all set 
+}
+else{
+  confirmPasswordInput.setCustomValidity('Password does not match'); 
+}
+
+})
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+////////////////////  creating account through firebase
 
   const signupForm = document.querySelector('#inputs');
   const emailInput = document.getElementById('email');
@@ -69,7 +158,7 @@ window.addEventListener('scroll', function () {
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
 
-        
+   showAlert('Account created Successfully');     
 //  now email will be send to user using  onAuthstatechanged 
         sendEmailVerification(userCredential.user);
         showAlert('Verification email has been sent. Please check your inbox.')
@@ -117,3 +206,9 @@ window.addEventListener('scroll', function () {
 //   });
 
 // })
+
+
+
+
+
+
