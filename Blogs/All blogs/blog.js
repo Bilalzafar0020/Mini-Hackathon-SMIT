@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import { getAuth,signOut,onAuthStateChanged  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import { getFirestore, collection, addDoc,getDocs,onSnapshot,doc,updateDoc, serverTimestamp, query, orderBy,deleteDoc,getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, updateDoc, serverTimestamp, query, orderBy, deleteDoc, getDoc, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"; // Import 'where' here
 
 const firebaseConfig = {
     apiKey: "AIzaSyBXcclnEkpLh_DnKT77N7KZLbAVomgSdTs",
@@ -67,7 +67,7 @@ window.addEventListener('scroll', function () {
 let FnameValidation = document.getElementById('title');
 
 FnameValidation.addEventListener("input", function() {
-  let maxLength = 47;
+  let maxLength = 44;
   
   if (FnameValidation.value.length > maxLength) {
     FnameValidation.value = FnameValidation.value.substring(0, maxLength);
@@ -167,14 +167,16 @@ postButton.addEventListener('click', ()=>{
           showAlert('Please enter some content to the blog !');
           return 
         }
-        let FnameValidationmin = document.getElementById('title');
-        let textareamin = document.getElementById('textarea');
-      
+       
 
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 ////////////////////  validations of title  and textarea  for minimum
+
+
+let FnameValidationmin = document.getElementById('title');
+let textareamin = document.getElementById('textarea');
 
 
         let maxLengthmin = 5;
@@ -206,8 +208,9 @@ postButton.addEventListener('click', ()=>{
             FirstTitle: title,
              content : secondTitleValue,
              time: serverTimestamp(),
-            //  userId: user.uid, //  the user's UID along with the post data
-            //  userName: user.displayName || user.providerData[0].displayName || user.email,
+             userId: user.uid, //  the  uid is a special id string given from firebase auth to the user
+         
+             //  userName: user.displayName || user.providerData[0].displayName || user.email,
             //  userProfilePic: user.photoURL || defaultProfilePic,
           };
     
@@ -222,8 +225,8 @@ postButton.addEventListener('click', ()=>{
       .catch((error) => {
         console.error('Error posting blog:', error);
 
-        setTimeout( showAlert(`You have'nt log-in/log-out yourself from this app.please login again to add post`)
-        , 5000);
+  // showAlert(error);
+
     })
 }
 
@@ -241,24 +244,24 @@ else{
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////    getting whole data from firbase   + creating dynacmmically posts               //////////////////////////
 
+auth.onAuthStateChanged((user) => {
 
 
 const mainDiv = document.getElementById('blogs');
 
 async function retrieveAndDisplayData() {
-     const querySnapshot = await getDocs(collection(db, "blogs"), orderBy('time', 'desc'));
-//     const user = auth.currentUser;
 
-//     if (!user) {
-//         return; // Exit if user is not logged in
-//     }
+console.log(user);
+  if (user) {
+    //  const querySnapshot = await getDocs(collection(db, "blogs"), orderBy('time', 'desc'));
 
-//     const userUID = user.uid;
-//     const userBlogsRef = collection(db, 'blogs');
-//     console.log(userUID);
-//     const querySnapshot = await getDocs(query(userBlogsRef, where('userId', '==', userUID), orderBy('time', 'desc')));
-  
-// console.log('userid',userUID);
+
+    const userUID = user.uid;
+    const userBlogsRef = collection(db, 'blogs');
+const querySnapshot = await getDocs(query(userBlogsRef, where('userId', '==', userUID), orderBy('time', 'desc')));
+
+    mainDiv.innerHTML = ''; // Clearing the existing posts
+
     querySnapshot.forEach((blogDoc) => {
       const blogData = blogDoc.data();
   
@@ -326,7 +329,7 @@ deleteButton.addEventListener('click', () => {
                     'Your blog has been deleted.',
                     'success'
                 );
-                mainDiv.innerHTML = ''; // Clear the existing posts
+                mainDiv.innerHTML = ''; // Clearing the existing posts
                 retrieveAndDisplayData(); // Fetch and display updated posts
             } catch (error) {
                 console.error('Error deleting blog:', error);
@@ -398,10 +401,22 @@ editButton.addEventListener('click', () => {
       card.appendChild(contentDiv);
       card.appendChild(buttonsDiv)
   
-    });
+    }); 
+    
+     
+  } else {
+    
+    showAlert('Please login first  before creating any blog ');
   }
-  
-  retrieveAndDisplayData();
+
+
+
+  }
+
+       retrieveAndDisplayData();
+
+ });  
+
 
 // // Add real-time listener to update posts automatically
 // function setupRealtimeListener() {
