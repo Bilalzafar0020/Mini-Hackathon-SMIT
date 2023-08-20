@@ -56,6 +56,43 @@ window.addEventListener('scroll', function () {
   }
 });
 
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+////////////////////  validations of title and textarea  for maximun
+
+
+// title  
+
+let FnameValidation = document.getElementById('title');
+
+FnameValidation.addEventListener("input", function() {
+  let maxLength = 47;
+  
+  if (FnameValidation.value.length > maxLength) {
+    FnameValidation.value = FnameValidation.value.substring(0, maxLength);
+    showAlert("Maximum 50 characters can be written");
+  }
+});
+
+
+
+// textarea/ content bar   
+
+let textarea = document.getElementById('textarea');
+
+const maxCharacters = 440;  
+
+textarea.addEventListener('input', () => {
+  //  for text lenght
+  if (textarea.value.length > maxCharacters) {
+    textarea.value = textarea.value.substring(0, maxCharacters); 
+    showAlert("Maximum 400 characters can be written");
+
+  }
+});
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,24 +140,6 @@ setTimeout( ()=>{ alertContainer.style.display  = 'none' },9000);
 //     }
 //   });
   
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////// for text area    //////////////////////////
-
-
-
-let textarea = document.getElementById('textarea');
-
-const maxCharacters = 400;  // 415 
-
-textarea.addEventListener('input', () => {
-  //  for text lenght
-  if (textarea.value.length > maxCharacters) {
-    textarea.value = textarea.value.substring(0, maxCharacters); 
-  }
-});
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,9 +164,41 @@ postButton.addEventListener('click', ()=>{
     if(user) {
 
         if(textarea.value.trim() === '' ){
-          showAlert('Please enter some content to post');
+          showAlert('Please enter some content to the blog !');
           return 
         }
+        let FnameValidationmin = document.getElementById('title');
+        let textareamin = document.getElementById('textarea');
+      
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+////////////////////  validations of title  and textarea  for minimum
+
+
+        let maxLengthmin = 5;
+        let maxCharactersmin = 100;
+
+        let validationFailed = false; // Flag to track if validation fails
+
+        if (FnameValidationmin.value.length < maxLengthmin) {
+          FnameValidationmin.value = FnameValidationmin.value.substring(0, maxLengthmin);
+          showAlert('Minimum 5 characters are required for the title');
+          validationFailed = true;
+        }
+    
+        if (textareamin.value.length < maxCharactersmin) {
+          textareamin.value = textareamin.value.substring(0, maxCharactersmin);
+          showAlert('Minimum 100 characters are required for the content');
+          validationFailed = true;
+        }
+    
+        if (validationFailed) {
+          return; // Exit the function if validation fails
+        }
+
+
 
         // let defaultProfilePic = 'base 64'
          
@@ -165,14 +216,9 @@ postButton.addEventListener('click', ()=>{
     
          showAlert(' Blog Posted');
       retrieveAndDisplayData();
-        // setTimeout(() => {
-        //   showAlert('Posted');
-        //   setTimeout(() => {
-        //     window.location.href = '../Threads.html';
-        // //   }, 1000); // for alert
-        // }, 1000);  // for redirection
-    
+        
       })
+      
       .catch((error) => {
         console.error('Error posting blog:', error);
 
@@ -264,7 +310,7 @@ deleteButton.addEventListener('click', () => {
     // Show a confirmation alert using SweetAlert
     Swal.fire({
         title: 'Are you sure?',
-        text: 'You will not be able to recover this post!',
+        text: 'You will not be able to recover this blog !',
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'No, cancel!',
@@ -277,7 +323,7 @@ deleteButton.addEventListener('click', () => {
                 await deleteDoc(doc(db, "blogs", blogDoc.id));
                 Swal.fire(
                     'Deleted!',
-                    'Your post has been deleted.',
+                    'Your blog has been deleted.',
                     'success'
                 );
                 mainDiv.innerHTML = ''; // Clear the existing posts
@@ -314,8 +360,8 @@ editButton.addEventListener('click', () => {
     Swal.fire({
         title: 'Edit Post',
         html: `
-            <input id="editTitle" type="text" value="${blogData.FirstTitle}" class="swal2-input" placeholder="Title">
-            <textarea id="editContent" class="swal2-textarea" placeholder="Content">${blogData.content}</textarea>
+<input id="editTitle" type="text" value="${blogData.FirstTitle}" class="swal2-input" placeholder="Title" minlength="5" maxlength="44">
+<textarea id="editContent" class="swal2-textarea" placeholder="Content" minlength="100" maxlength="400">${blogData.content}</textarea>
         `,
         showCancelButton: true,
         confirmButtonText: 'Save Changes',
@@ -330,7 +376,7 @@ editButton.addEventListener('click', () => {
                 });
                 Swal.fire(
                     'Updated!',
-                    'Your post content has been updated.',
+                    'Your blog content has been updated.',
                     'success'
                 );
                 mainDiv.innerHTML = ''; 
