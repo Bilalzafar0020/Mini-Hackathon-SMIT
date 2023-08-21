@@ -328,23 +328,10 @@ h1.Myblogs{
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* background-color: #ffffff; */
-    /* border-radius: 3px; */
     width: 55.0625rem;
     height: 100vh;
-    /* box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.12); */
      margin-left: 15.5rem; 
  }
-
-/* div.secondDiv{
- display: flex;
- flex-direction: column;
- margin-left: 0rem; 
-border: 1px solid red;
-width: 100%;
-height: 100%;
-} */
-
 
 div.card{
     display: flex;
@@ -353,13 +340,17 @@ div.card{
     background-color: #ffffff;
     border-radius: 3px;
     width: 55.0625rem;
-    height: 18.625rem;
+    height: 18.7rem;
     box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.12);   
     margin-right: 11.5rem;  
     margin-bottom: 35px;  
     border-radius: 13px;
 }
-
+              /* ///////////////////////////////
+ ////////////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////
+ ///////////////////////////////////////////////////////////
+                          title div  */
 div.titleDiv{
 width: 100%;
 display: flex;
@@ -370,18 +361,24 @@ height: 6rem;
 margin-top: 1.4rem;
 }
 
+              /* ///////////////////////////////
+ ////////////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////
+ ///////////////////////////////////////////////////////////
+                          content div  */
 textarea.contentDiv{
 display: flex;
 flex-direction: column;
 align-items: start;
 justify-content: flex-end;
-width: 92%;
+width: 97%;
 height: 10rem;
 margin-top: 8px;
-color: #303233;
+color: #575c61;
+text-transform: capitalize;
 font-size: 16px;
 font-weight: 550;
-letter-spacing: 1px;
+letter-spacing: 1.3px;
 border: none;
 outline: none;
 resize: none;
@@ -403,10 +400,16 @@ img.image{
 h1.firsttitle{
     margin-left: 7px;
     font-size: 30px;
-font-weight: bold;
+font-weight: 550;
+font-family: sans-serif;
+text-transform: capitalize;
 }
 
-
+              /* ///////////////////////////////
+ ////////////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////
+ ///////////////////////////////////////////////////////////
+                          buttons div */
 div.buttonsDiv{
   display: flex;
   flex-direction: row;
@@ -427,9 +430,7 @@ button.deleteButton{
         font-weight: 550;
         cursor: pointer;
     }
-    /* button.deletebutton:hover{
-        transform: scale(1.1);
-    }       */
+   
     button.editButton{
         border: none;
         outline: none;
@@ -440,7 +441,31 @@ button.deleteButton{
         cursor: pointer;
         background-color: #ffffff;
     }
-    /* button:hover{
-        transform: scale(1.1);
-    }       */
+    
+    div.maintitleDiv {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+div.nameandDateofpostDiv{
+display: flex;
+flex-direction: row;
+gap: 15px;
+margin-left: 10px;
+}
 
+h3.posterName{
+color: #6c757d;
+text-transform: capitalize;
+font-size: 15.8px;
+font-family: sans-serif;
+font-weight: bold;
+}
+
+h3.postedDate{
+color: #6c757d;
+text-transform: capitalize;
+font-size: 16px;
+font-family: sans-serif;
+font-weight: bold;
+}

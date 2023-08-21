@@ -67,7 +67,7 @@ window.addEventListener('scroll', function () {
 let FnameValidation = document.getElementById('title');
 
 FnameValidation.addEventListener("input", function() {
-  let maxLength = 44;
+  let maxLength = 43;
   
   if (FnameValidation.value.length > maxLength) {
     FnameValidation.value = FnameValidation.value.substring(0, maxLength);
@@ -81,7 +81,7 @@ FnameValidation.addEventListener("input", function() {
 
 let textarea = document.getElementById('textarea');
 
-const maxCharacters = 440;  
+const maxCharacters = 390;  
 
 textarea.addEventListener('input', () => {
   //  for text lenght
@@ -209,9 +209,6 @@ let textareamin = document.getElementById('textarea');
              content : secondTitleValue,
              time: serverTimestamp(),
              userId: user.uid, //  the  uid is a special id string given from firebase auth to the user
-         
-             //  userName: user.displayName || user.providerData[0].displayName || user.email,
-            //  userProfilePic: user.photoURL || defaultProfilePic,
           };
     
       addDoc(collection(db, "blogs"),inputData)
@@ -283,12 +280,52 @@ imageDiv.appendChild(image);
   titleDiv.appendChild(imageDiv);
 
 
+  const maintitleDiv = document.createElement('div');
+  maintitleDiv.classList.add('maintitleDiv');
 
       const FirstTitle = document.createElement('h1');
       FirstTitle.classList.add('firsttitle');
       FirstTitle.textContent = blogData.FirstTitle;
-      titleDiv.appendChild(FirstTitle);
+      maintitleDiv.appendChild(FirstTitle);
   
+      
+     let nameandDateofpostDiv = document.createElement('div');
+      nameandDateofpostDiv.classList.add('nameandDateofpostDiv');
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+////////////////////  geting name from local storage  
+
+       let userName = localStorage.getItem('userName');
+       
+let posterName = document.createElement('h3');
+posterName.classList.add('posterName');
+posterName.textContent = userName || user.email;
+nameandDateofpostDiv.appendChild(posterName);
+
+
+let postedDate = document.createElement('h3');
+postedDate.classList.add('postedDate');
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+////////////////////   time when the blog was made 
+
+let postedTime = new Date(blogData.time.seconds * 1000); // Converting Firestore serverTimestamp to JavaScript Date object
+let options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric' };
+postedDate.textContent = postedTime.toLocaleDateString('en-IN', options);
+
+nameandDateofpostDiv.appendChild(postedDate);
+
+
+      maintitleDiv.appendChild(nameandDateofpostDiv);
+  
+titleDiv.appendChild(maintitleDiv)
+
+
+
       const contentDiv = document.createElement('textarea');
       contentDiv.classList.add('contentDiv');
       contentDiv.readOnly = true; // Set the textarea to be non-editable
@@ -358,13 +395,13 @@ deleteButton.addEventListener('click', () => {
 //////////////   edit functionality            //////////////////////////
 
 
-// Edit functionality
+
 editButton.addEventListener('click', () => {
     Swal.fire({
         title: 'Edit Post',
         html: `
-<input id="editTitle" type="text" value="${blogData.FirstTitle}" class="swal2-input" placeholder="Title" minlength="5" maxlength="44">
-<textarea id="editContent" class="swal2-textarea" placeholder="Content" minlength="100" maxlength="400">${blogData.content}</textarea>
+<input id="editTitle" type="text" value="${blogData.FirstTitle}" class="swal2-input" placeholder="Title" minlength="5" maxlength="43">
+<textarea id="editContent" class="swal2-textarea" placeholder="Content" minlength="100" maxlength="390">${blogData.content}</textarea>
         `,
         showCancelButton: true,
         confirmButtonText: 'Save Changes',
@@ -372,6 +409,33 @@ editButton.addEventListener('click', () => {
         if (result.isConfirmed) {
             const editedTitle = document.getElementById('editTitle').value;
             const editedContent = document.getElementById('editContent').value;
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////  validation for title    //////////////////////////
+
+          if(editedTitle.length < 5){
+
+            Swal.fire(
+              'Error',
+              'Title of blog  must be at least 5 characters long.',
+              'error'
+          );
+
+            return
+          }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////  validation for content    //////////////////////////
+
+if (editedContent.length < 100) {
+  Swal.fire(
+      'Validation Error',
+      'Content of blog must be at least 100 characters long.',
+      'error'
+  );
+  return;
+}
             try {
                 await updateDoc(doc(db, 'blogs', blogDoc.id), {
                     FirstTitle: editedTitle,
