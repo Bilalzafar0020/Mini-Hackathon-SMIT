@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-Hakcathon-SMIT</title>
+<link rel="stylesheet" href="./signup.css">
+
+<link rel="shortcut icon" href="../Assets/blog-removebg-preview.png" type="image/x-icon">
+
+</head>
+<body>
+    
+    <main class="main">
+
+
+
+    <header>
+
+    <div class="firstnav">
+
+        <h2 class="name1">Personal Blogging App</h2>
+  
+        <h4 class="name2"><a href="../Login/login.html" class="name2">Login</a></h4>
+
+    </div>
+
+  <div class="secondnav">
+
+    <h1 class="name3">Signup</h1>
+
+  </div>
+
+
+
+    </header>
+
+    <section class="signupcard">
+
+
+        <form class="inputs" id="inputs">
+
+<input type="text" placeholder="First Name"  id="Fname" class="Fname" required minlength="5" >
+<input type="text" placeholder="Last Name"  id="Lname" class="Lname" required minlength="5">
+
+        <input type="email" placeholder="Email"  id="email" class="email" 
+        required pattern=".{6,20}(\d{1,8})?@gmail\.com"
+        title="The pattern of email should be like bilal(any 1 number if have )@gmail.com" />
+
+        <!-- 
+          list="defaultEmails"    add list this in the input 
+          <datalist id="defaultEmails">
+          <option value="bilal007@gmail.com"></option>
+          <option value="Bilal0020@gmail.com"></option>
+          <option value="bilalaa007234@gmail.com"></option>
+          <option value="bilal@gmail.com"></option>
+        </datalist> -->
+
+
+<input type="password" placeholder="Password"  id="password"
+ class="password" 
+ required minlength="8" >      <!--pattern=".{8,25}(\d{8,12})?" -->
+
+<input type="password" placeholder="Repeat Password"
+  id="Rpassword" class="Rpassword" required minlength="8">
+
+  <input type="file" 
+  id="file" class="file" required >
+
+
+<button class="signup">Signup</button>
+
+    </form>
+
+
+      
+    </section>
+
+
+
+
+
+
+
+    </main>
+    
+    
+    <!--  alert box div           -->
+    <div id="alertContainer"></div>
+    
+
+
+
+<script type="module" src="./signup.js"></script>
+</body>
+</html>
