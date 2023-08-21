@@ -162,6 +162,7 @@ else{
 //  now email will be send to user using  onAuthstatechanged 
         sendEmailVerification(userCredential.user);
         showAlert('Verification email has been sent. Please check your inbox.')
+
       })
       .catch((error) => {
 
@@ -182,52 +183,39 @@ else{
      let combineName = FirstuserName + '' + LastuserName;
 
      let userName = combineName;
-
-console.log('console',userName);
+     
  localStorage.setItem('userName',userName);
+
 
   });
 
 
 
-
-////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-////////////////////   google login 
-
-
-
-// const provider = new GoogleAuthProvider();
-
-//  let google = document.getElementById('google');
-
-//  google.addEventListener('click', ()=>{
-// signInWithPopup(auth, provider)
-//   .then((result) => {
-//     // This gives you a Google Access Token. You can use it to access the Google API.
-//     const credential = GoogleAuthProvider.credentialFromResult(result);
-//     const token = credential.accessToken;
-//     // The signed-in user info.
-//     const user = result.user;
-//     // IdP data available using getAdditionalUserInfo(result)
-//     // ...
-//     window.location.href = '../Loader.html';
-//   }).catch((error) => {
-//     // Handle Errors here.
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // The email of the user's account used.
-//     const email = error.customData.email;
-//     // The AuthCredential type that was used.
-//     const credential = GoogleAuthProvider.credentialFromError(error);
-//     // ...
-//   });
-
-// })
+  /////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+/////////////////////////////   seting local storage for file 
 
 
-
-
+  let fileInput = document.getElementById('file');
+  fileInput.addEventListener('change', function() {
+    let selectedFile = fileInput.files[0];
+    if (selectedFile) {
+      let reader = new FileReader();
+  
+      reader.onload = (event) => {
+        let imageDataURL = event.target.result;
+        localStorage.setItem('imageData', imageDataURL);
+      };
+  
+      reader.onerror = function(event) {
+        console.error('File reading error:', event.target.error);
+      };
+  
+      reader.readAsDataURL(selectedFile);
+    }
+  });
+  
 
 

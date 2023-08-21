@@ -67,7 +67,7 @@ window.addEventListener('scroll', function () {
 let FnameValidation = document.getElementById('title');
 
 FnameValidation.addEventListener("input", function() {
-  let maxLength = 43;
+  let maxLength = 41;
   
   if (FnameValidation.value.length > maxLength) {
     FnameValidation.value = FnameValidation.value.substring(0, maxLength);
@@ -81,7 +81,7 @@ FnameValidation.addEventListener("input", function() {
 
 let textarea = document.getElementById('textarea');
 
-const maxCharacters = 390;  
+const maxCharacters = 400;  
 
 textarea.addEventListener('input', () => {
   //  for text lenght
@@ -272,9 +272,18 @@ const querySnapshot = await getDocs(query(userBlogsRef, where('userId', '==', us
   let imageDiv = document.createElement('div');
   imageDiv.classList.add('imageDiv');
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////    getting the image from localstorge                //////////////////////////
+
+  let storedImageData = localStorage.getItem('imageData');
+    
+
    let image  = document.createElement('img');
    image.classList.add('image');
-   image.src = '/Assets/3d-render-cartoon-avatar-isolated_570939-71.jpg';
+   image.src =   storedImageData  || '/Assets/3d-render-cartoon-avatar-isolated_570939-71.jpg';
 imageDiv.appendChild(image);
 
   titleDiv.appendChild(imageDiv);
@@ -400,8 +409,8 @@ editButton.addEventListener('click', () => {
     Swal.fire({
         title: 'Edit Post',
         html: `
-<input id="editTitle" type="text" value="${blogData.FirstTitle}" class="swal2-input" placeholder="Title" minlength="5" maxlength="43">
-<textarea id="editContent" class="swal2-textarea" placeholder="Content" minlength="100" maxlength="390">${blogData.content}</textarea>
+<input id="editTitle" type="text" value="${blogData.FirstTitle}" class="swal2-input" placeholder="Title" minlength="5" maxlength="41>
+<textarea id="editContent" class="swal2-textarea" placeholder="Content" minlength="100" maxlength="400">${blogData.content}</textarea>
         `,
         showCancelButton: true,
         confirmButtonText: 'Save Changes',

@@ -388,7 +388,7 @@ div.imageDiv{
     width: 5rem;
     height: 100px;
     border-radius: 12px;
-    margin-left: 2rem;
+    margin-left: 1rem;
 }
 
 img.image{
@@ -399,6 +399,7 @@ img.image{
 
 h1.firsttitle{
     margin-left: 7px;
+    width: 52vw;
     font-size: 30px;
 font-weight: 550;
 font-family: sans-serif;
@@ -414,7 +415,7 @@ div.buttonsDiv{
   display: flex;
   flex-direction: row;
   gap: 10px;
-  margin-left: 2rem;    
+  margin-left: 1rem;    
   width: 100%;
   height: 4rem;
 }
@@ -446,6 +447,7 @@ button.deleteButton{
         display: flex;
         flex-direction: column;
         gap: 10px;
+        width: 87%;
     }
 div.nameandDateofpostDiv{
 display: flex;

@@ -72,7 +72,6 @@ const passwordInput = document.getElementById('password');
     .then((userCredential) => {
  
       if (userCredential.user.emailVerified) {
-        // Redirect to second.html if email is verified
         window.location.href = "../Blogs/All blogs/blog.html";
       } else {
         showAlert('Please verify your email before logging in.')
@@ -81,7 +80,6 @@ const passwordInput = document.getElementById('password');
       })
       .catch((error) => {
         const errorCode = error.code;
-        // alert(errorCode);
         showAlert(errorCode)
 
       });
@@ -113,7 +111,7 @@ onAuthStateChanged(auth, (user) => {
          showAlert('You have logined before, dont need for again login')
 
          setTimeout(()=>{
-                  window.location.href = '../Blogs/All blogs/blog.html'; // ./third%20Page/third.html
+                  window.location.href = '../Blogs/All blogs/blog.html'; 
          },2000)
         
        
