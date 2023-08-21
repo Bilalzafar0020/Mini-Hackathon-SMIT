@@ -75,8 +75,10 @@ font-size: 15px;
 a.name2{
     cursor: pointer;
     font-size: 15px;
+    font-weight: 600;
     text-decoration: none;
     color: #ffffff; 
+    margin-top: 1.5px;
 }
 h1.name3{
     margin-left: 10rem;

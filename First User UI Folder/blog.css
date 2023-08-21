@@ -428,20 +428,10 @@ button.deleteButton{
         background-color: #ffffff;
         font-size: 16px;
         margin-left: 20px;
-        font-weight: 550;
+        font-weight: 600;
         cursor: pointer;
     }
    
-    button.editButton{
-        border: none;
-        outline: none;
-        color: #7749f8;
-        font-size: 16px;
-        margin-left: 20px;
-        font-weight: 550;
-        cursor: pointer;
-        background-color: #ffffff;
-    }
     
     div.maintitleDiv {
         display: flex;

@@ -57,6 +57,53 @@ window.addEventListener('scroll', function () {
 });
 
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+// For the dynamically changing of greetings (Good morning Readers) 
+
+
+   document.addEventListener('DOMContentLoaded' , ()=>{
+
+  let staticGreeting = document.getElementById('greetings');
+
+let date = new Date();
+
+
+let greetings = '';
+
+
+let hours = date.getHours();
+
+if(hours >= 5 && hours <= 12){
+
+  greetings = 'Good Morning Readers!';
+}
+else if(hours >= 12 && hours <= 18){
+
+  greetings = 'Good Afternoon Readers!';
+}
+else if( hours >= 18 && hours <=21){
+  greetings ='Good Evening Readers!';
+}
+else {
+  greetings = 'Good Night Readers!';
+}
+
+staticGreeting.textContent = greetings;
+
+
+   })
+
+
+
+
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,8 +116,9 @@ const mainDiv = document.getElementById('blogs');
 
 async function retrieveAndDisplayData() {
 
+  const userBlogsRef = collection(db, 'blogs');
 
-     const querySnapshot = await getDocs(collection(db, "blogs"), orderBy('time', 'desc'));
+     const querySnapshot = await getDocs(query(userBlogsRef, orderBy('time', 'desc')));
 
 
 //     const userUID = user.uid;
@@ -161,14 +209,23 @@ titleDiv.appendChild(maintitleDiv)
       contentDiv.textContent = blogData.content;
   
 
-
+     
+   let buttonsDiv = document.createElement('div');
+   buttonsDiv.classList.add('buttonsDiv');
+   
+   
+         let deleteButton = document.createElement('button');
+             deleteButton.classList.add('deleteButton');
+             deleteButton.textContent = 'see all from this user';
+             buttonsDiv.appendChild(deleteButton);
+   
 
 
       
 
       card.appendChild(titleDiv);
       card.appendChild(contentDiv); // 
-      
+        card.appendChild(buttonsDiv);      
   
     }); 
     
@@ -177,7 +234,6 @@ titleDiv.appendChild(maintitleDiv)
 
 
        retrieveAndDisplayData();
-
    
 
 
