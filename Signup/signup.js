@@ -1,7 +1,9 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
   import { getAuth,createUserWithEmailAndPassword,sendEmailVerification,onAuthStateChanged,GoogleAuthProvider, signInWithPopup} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-  
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js"; // Import Storage functions
+
   const firebaseConfig = {
     apiKey: "AIzaSyBXcclnEkpLh_DnKT77N7KZLbAVomgSdTs",
     authDomain: "saylani-mini-hackathon.firebaseapp.com",
@@ -15,7 +17,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebas
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-
+  const db = getFirestore(app);
+  const storage = getStorage(app);
 
   // alert message 
   function showAlert(message) {
@@ -139,6 +142,15 @@ else{
 
 
 
+  let fileInput = document.getElementById('file');
+  fileInput.addEventListener('change', function(event) {
+
+      const selectedFile = event.target.files[0];
+if (selectedFile) {
+      console.log('file uploaded');
+  }
+
+});
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
@@ -156,12 +168,55 @@ else{
 
   
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then( async (userCredential) => {
 
    showAlert('Account created Successfully');     
 //  now email will be send to user using  onAuthstatechanged 
         sendEmailVerification(userCredential.user);
         showAlert('Verification email has been sent. Please check your inbox.')
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+/// adding user name and image to new document users
+
+
+
+//  the user's UID
+const userUid = userCredential.user.uid;
+
+
+
+let FirstuserName = document.getElementById('Fname').value;
+let LastuserName = document.getElementById('Lname').value;
+
+let combineName = FirstuserName + '' + LastuserName;
+console.log(combineName);
+//  the selected image file
+    const selectedFile = fileInput.files[0];
+
+    if (selectedFile) {
+      // Uploading the image file to Firebase Storage
+      const storageRef = ref(storage, `userImages/${userUid}/${selectedFile.name}`);
+      const snapshot = await uploadBytes(storageRef, selectedFile);
+
+      // Get the download URL of the uploaded image
+      const imageUrl = await getDownloadURL(snapshot.ref);
+
+      // Creating a user document in the Firestore "users" collection
+      const userDocRef = doc(db, 'users', userUid);
+
+      const userData = {
+        userName: combineName,
+        imageUrl: imageUrl, 
+       
+      };
+
+      await setDoc(userDocRef, userData);
+    }
+
 
       })
       .catch((error) => {
@@ -172,50 +227,6 @@ else{
       });
 
 
-////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-////////////////////   seting local storage for name 
-
-         let FirstuserName = document.getElementById('Fname').value;
-         let LastuserName = document.getElementById('Lname').value;
-
-     let combineName = FirstuserName + '' + LastuserName;
-
-     let userName = combineName;
-     
- localStorage.setItem('userName',userName);
-
-
   });
-
-
-
-  /////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-/////////////////////////////   seting local storage for file 
-
-
-  let fileInput = document.getElementById('file');
-  fileInput.addEventListener('change', function() {
-    let selectedFile = fileInput.files[0];
-    if (selectedFile) {
-      let reader = new FileReader();
-  
-      reader.onload = (event) => {
-        let imageDataURL = event.target.result;
-        localStorage.setItem('imageData', imageDataURL);
-      };
-  
-      reader.onerror = function(event) {
-        console.error('File reading error:', event.target.error);
-      };
-  
-      reader.readAsDataURL(selectedFile);
-    }
-  });
-  
 
 

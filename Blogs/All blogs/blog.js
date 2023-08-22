@@ -271,11 +271,15 @@ console.log(user);
 const queryRef = query(userBlogsRef, where('userId', '==', userUID), orderBy('time', 'desc'));
 
 
-///   onSnapshot to listen for real-time updates
-      const unsubscribe = onSnapshot(queryRef, (querySnapshot) => {
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////  ///   onSnapshot to listen for real-time updates              //////////////////////////
+
+      const unsubscribe = onSnapshot(queryRef,  (querySnapshot) => {
     mainDiv.innerHTML = ''; // Clearing the existing posts
 
-    querySnapshot.forEach((blogDoc) => {
+    querySnapshot.forEach(async (blogDoc) => {
       const blogData = blogDoc.data();
   
       const card = document.createElement('div');
@@ -292,14 +296,21 @@ const queryRef = query(userBlogsRef, where('userId', '==', userUID), orderBy('ti
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
-//////////////    getting the image from localstorge                //////////////////////////
+//////////////    getting the image from firestore database                //////////////////////////
 
-  let storedImageData = localStorage.getItem('imageData');
+try {
+  const userDocRef = doc(db, 'users', blogData.userId);
+  const userDocSnapshot = await getDoc(userDocRef);
+
+  if (userDocSnapshot.exists()) {
+      const userData = userDocSnapshot.data();
+      const userImageURL = userData.imageUrl;
+      const userName = userData.userName;
     
 
    let image  = document.createElement('img');
    image.classList.add('image');
-   image.src =   storedImageData  || '/Assets/3d-render-cartoon-avatar-isolated_570939-71.jpg';
+   image.src =   userImageURL  || '/Assets/3d-render-cartoon-avatar-isolated_570939-71.jpg';
 imageDiv.appendChild(image);
 
   titleDiv.appendChild(imageDiv);
@@ -320,15 +331,13 @@ imageDiv.appendChild(image);
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
-////////////////////  geting name from local storage  
+////////////////////  geting name from firebase database   
 
-       let userName = localStorage.getItem('userName');
        
 let posterName = document.createElement('h3');
 posterName.classList.add('posterName');
 posterName.textContent = userName || user.email;
 nameandDateofpostDiv.appendChild(posterName);
-
 
 let postedDate = document.createElement('h3');
 postedDate.classList.add('postedDate');
@@ -356,6 +365,7 @@ titleDiv.appendChild(maintitleDiv)
       contentDiv.readOnly = true; // Set the textarea to be non-editable
       contentDiv.textContent = blogData.content;
   
+    
 
    let buttonsDiv = document.createElement('div');
 buttonsDiv.classList.add('buttonsDiv');
@@ -425,9 +435,9 @@ editButton.addEventListener('click', () => {
     Swal.fire({
         title: 'Edit Post',
         html: `
-<input id="editTitle" type="text" value="${blogData.FirstTitle}" class="swal2-input" placeholder="Title" minlength="5" maxlength="41>
-<textarea id="editContent" class="swal2-textarea" placeholder="Content" minlength="100" maxlength="400"> ${blogData.content} </textarea>
-        `,
+        <input id="editTitle" type="text" value="${blogData.FirstTitle}" class="swal2-input" placeholder="Title" minlength="5" maxlength="41">
+        <textarea id="editContent" class="swal2-textarea" placeholder="Content" minlength="100" maxlength="400">${blogData.content}</textarea>
+                `,
         showCancelButton: true,
         confirmButtonText: 'Save Changes',
     }).then(async (result) => {
@@ -490,6 +500,13 @@ if (editedContent.length < 100) {
       card.appendChild(contentDiv);
       card.appendChild(buttonsDiv)
   
+    }
+  }
+   catch (error) {
+      console.error('Error fetching user data:', error);
+  }
+
+
     }); 
     
     
