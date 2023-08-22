@@ -268,8 +268,11 @@ console.log(user);
 
     const userUID = user.uid;
     const userBlogsRef = collection(db, 'blogs');
-const querySnapshot = await getDocs(query(userBlogsRef, where('userId', '==', userUID), orderBy('time', 'desc')));
+const queryRef = query(userBlogsRef, where('userId', '==', userUID), orderBy('time', 'desc'));
 
+
+///   onSnapshot to listen for real-time updates
+      const unsubscribe = onSnapshot(queryRef, (querySnapshot) => {
     mainDiv.innerHTML = ''; // Clearing the existing posts
 
     querySnapshot.forEach((blogDoc) => {
@@ -423,7 +426,7 @@ editButton.addEventListener('click', () => {
         title: 'Edit Post',
         html: `
 <input id="editTitle" type="text" value="${blogData.FirstTitle}" class="swal2-input" placeholder="Title" minlength="5" maxlength="41>
-<textarea id="editContent" class="swal2-textarea" placeholder="Content" minlength="100" maxlength="400">${blogData.content}</textarea>
+<textarea id="editContent" class="swal2-textarea" placeholder="Content" minlength="100" maxlength="400"> ${blogData.content} </textarea>
         `,
         showCancelButton: true,
         confirmButtonText: 'Save Changes',
@@ -489,7 +492,9 @@ if (editedContent.length < 100) {
   
     }); 
     
-     
+    
+  });   //   snapshot 
+
   } else {
     
     showAlert('Please login first  before creating any blog ');
@@ -502,24 +507,3 @@ if (editedContent.length < 100) {
        retrieveAndDisplayData();
 
  });  
-
-
-// // Add real-time listener to update posts automatically
-// function setupRealtimeListener() {
-//     onSnapshot(collection(db, "blogs"), (snapshot) => {
-//         mainDiv.innerHTML = ''; // Clear the existing posts
-//         snapshot.forEach((blogDoc) => {
-//             const blogData = blogDoc.data();
-//             // ... (rest of your code to create and append cards)
-//         });
-//     });
-// }
-
-// // Call the setupRealtimeListener function to start listening for changes
-// setupRealtimeListener();
-
-
-
-
-
-

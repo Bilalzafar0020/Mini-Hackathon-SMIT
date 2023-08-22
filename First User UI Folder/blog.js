@@ -118,15 +118,18 @@ async function retrieveAndDisplayData() {
 
   const userBlogsRef = collection(db, 'blogs');
 
-     const querySnapshot = await getDocs(query(userBlogsRef, orderBy('time', 'desc')));
+    //  const querySnapshot = await getDocs(query(userBlogsRef, orderBy('time', 'desc')));
+   
+   
+    // a query with orderBy
+    const queryRef = query(userBlogsRef, orderBy('time', 'desc'));
+  
+ //  for real-time updates using onSnapshot
+ const unsubscribe = onSnapshot(queryRef, (querySnapshot) => {
+  // Clearing existing content before updating
+  mainDiv.innerHTML = '';
 
-
-//     const userUID = user.uid;
-//     const userBlogsRef = collection(db, 'blogs');
-// const querySnapshot = await getDocs(query(userBlogsRef, where('userId', '==', userUID), orderBy('time', 'desc')));
-
-    // mainDiv.innerHTML = ''; // Clearing the existing posts
-
+  
     querySnapshot.forEach((blogDoc) => {
       const blogData = blogDoc.data();
   
@@ -230,29 +233,8 @@ titleDiv.appendChild(maintitleDiv)
     }); 
     
      
-  } 
+  }); 
 
-
+}
        retrieveAndDisplayData();
    
-
-
-// // Add real-time listener to update posts automatically
-// function setupRealtimeListener() {
-//     onSnapshot(collection(db, "blogs"), (snapshot) => {
-//         mainDiv.innerHTML = ''; // Clear the existing posts
-//         snapshot.forEach((blogDoc) => {
-//             const blogData = blogDoc.data();
-//             // ... (rest of your code to create and append cards)
-//         });
-//     });
-// }
-
-// // Call the setupRealtimeListener function to start listening for changes
-// setupRealtimeListener();
-
-
-
-
-
-
